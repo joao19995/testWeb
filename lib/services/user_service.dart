@@ -1,38 +1,25 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-class User {
-  final int id;
-  final String name;
-
-  User({required this.id, required this.name});
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      name: json['name'],
-    );
-  }
-}
+import 'package:namer_app/model/user.dart';
 
 class UserService {
-  final String baseUrl = "https://test-gi25.onrender.com"; // or http://10.0.2.2:8080
+  final String baseUrl = "https://test-gi25.onrender.com";
 
   Future<List<User>> getUsers() async {
     final response = await http.get(Uri.parse("$baseUrl/users"));
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
-      return data.map((e) => User.fromJson(e)).toList();
+      return data.map((e) => User.fromJson(e as Map<String, dynamic>)).toList();
     } else {
       throw Exception("Failed to load users");
     }
   }
 
-  Future<User> createUser(String name) async {
+  Future<User> createUser(String name, String email) async {
     final response = await http.post(
       Uri.parse("$baseUrl/users"),
       headers: {"Content-Type": "application/json"},
-      body: json.encode({"name": name}),
+      body: json.encode({"name": name, "email": email}),
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       return User.fromJson(json.decode(response.body));
