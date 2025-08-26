@@ -19,7 +19,7 @@ class User {
 }
 
 class UserService {
-  final String baseUrl = "http://localhost:8080"; // or http://10.0.2.2:8080
+  final String baseUrl = "https://test-gi25.onrender.com"; // or http://10.0.2.2:8080
 
   Future<List<User>> getUsers() async {
     final response = await http.get(Uri.parse("$baseUrl/users"));
