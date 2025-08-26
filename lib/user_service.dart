@@ -1,19 +1,16 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:http/http.dart' as http;
 
 class User {
-  final Long id;
+  final int id;
   final String name;
-  final String email;
 
-  User({required this.id, required this.name,required this.email});
+  User({required this.id, required this.name});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
       name: json['name'],
-      email: json['email'],
     );
   }
 }
